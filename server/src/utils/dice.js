@@ -1,3 +1,5 @@
+import Universe from './universe';
+
 /**
  * 骰子
  */
@@ -11,19 +13,11 @@ class Dice {
    */
   constructor(dices = 3, sides = 6, add = 0, item) {
     this.dices = [];
-    for (let i = 0; i < dices; i++) {
-      this.dices.push(this.__random(sides));
+    for (let i = 0; i < dices; i += 1) {
+      this.dices.push(Universe.random(sides));
     }
     this.add = add;
     this.item = item;
-  }
-
-  /**
-   * 随机数
-   * @param {Number} max 最大值
-   */
-  __random(max) {
-    return Math.ceil(Math.random() * max);
   }
 
   /**
@@ -31,7 +25,9 @@ class Dice {
    */
   __total() {
     let result = 0;
-    this.dices.forEach(dice => result += dice);
+    this.dices.forEach((dice) => {
+      result += dice;
+    });
     return result + this.add;
   }
 
@@ -40,9 +36,11 @@ class Dice {
    */
   result() {
     const total = this.__total();
-    let result = this.item ? '的${item}的判定：' : '的判定：';
+    let result = this.item ? `${this.item}的判定：` : '判定：';
     result += this.dices.pop();
-    this.dices.forEach(dice => result += `+${dice}`);
+    this.dices.forEach((dice) => {
+      result += `+${dice}`;
+    });
     return `${result}=${total}`;
   }
 }
