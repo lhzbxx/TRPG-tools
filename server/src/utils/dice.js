@@ -28,7 +28,7 @@ class Dice {
     this.dices.forEach((dice) => {
       result += dice;
     });
-    return result + this.add;
+    return result + Number(this.add);
   }
 
   /**
@@ -41,6 +41,7 @@ class Dice {
     this.dices.forEach((dice) => {
       result += `+${dice}`;
     });
+    result += `+(${this.add})`;
     return `${result}=${total}`;
   }
 }
