@@ -24,7 +24,7 @@ io.on('connection', (client) => {
     console.log(`user ${nickname} join channel: ${channel}`);
   });
   // 离开频道
-  client.on('leaveChannel', (channel) => {
+  client.on('leaveChannel', ({ channel }) => {
     client.leave(channel);
     io.to(channel).emit('channel', Format.channelDTO(clientID, 'LEAVE'));
     console.log(`user ${nickname} leave channel: ${channel}`);
@@ -32,9 +32,9 @@ io.on('connection', (client) => {
   // 掷骰子
   client.on('dice', ({ channel, dices, sides, add = 0, item = '', isPrivate = false }) => {
     if (inChannel(channel)) {
-      const dice = new Dice(dices, sides, add, item);
+      const dice = new Dice(dices, sides, add, item, isPrivate);
       if (isPrivate) {
-        client.emit('message', Format.messageDTO(clientID, 'TOOL:DICE:PRIVATE', dice.result()));
+        client.emit('message', Format.messageDTO(clientID, 'TOOL:DICE', dice.result()));
       } else {
         io.in(channel).emit('message', Format.messageDTO(clientID, 'TOOL:DICE', dice.result()));
       }
@@ -47,6 +47,12 @@ io.on('connection', (client) => {
       io.in(channel).emit('message', Format.messageDTO(clientID, 'MESSAGE', message));
       console.log(`user ${nickname} send message: ${message}`);
     }
+  });
+  // （即将）断开链接
+  client.on('disconnecting', () => {
+    Object.keys(client.rooms).forEach((channel) => {
+      io.to(channel).emit('channel', Format.channelDTO(clientID, 'LEAVE'));
+    });
   });
   // 断开链接
   client.on('disconnect', () => {
