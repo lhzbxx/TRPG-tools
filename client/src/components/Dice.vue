@@ -1,7 +1,7 @@
 <template>
   <div class="dice">
-    <input type="number" placeholder="个数" v-model="dices">
-    <input type="number" placeholder="面数" v-model="sides">
+    <input type="number" min="1" placeholder="个数" v-model="dices">
+    <input type="number" min="1" placeholder="面数" v-model="sides">
     <input type="number" placeholder="追加值" v-model="add">
     <input type="text" placeholder="判定项" v-model.trim="item">
     <input type="checkbox" id="isPrivate" v-model="isPrivate">
