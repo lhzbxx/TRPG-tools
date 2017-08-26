@@ -100,6 +100,7 @@ export default {
       & > .channels {
         padding: 0 15px;
         width: 150px;
+        min-width: 150px;
         border-right: 1px solid #eee;
       }
 
