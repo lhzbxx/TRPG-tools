@@ -14,6 +14,7 @@ class Dice {
    */
   constructor(dices = 3, sides = 6, add = 0, item = '', isPrivate = false) {
     this.dices = [];
+    this.sides = sides;
     for (let i = 0; i < dices; i += 1) {
       this.dices.push(Universe.random(sides));
     }
@@ -47,7 +48,7 @@ class Dice {
     if (this.add && this.add !== 0) {
       result += `+(${this.add})`;
     }
-    return `${result}=${total}(${this.dices}d${this.sides})`;
+    return `${result}=${total}(${this.dices.length + 1}d${this.sides})`;
   }
 }
 
