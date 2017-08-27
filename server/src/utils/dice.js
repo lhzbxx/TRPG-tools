@@ -47,7 +47,7 @@ class Dice {
     if (this.add && this.add !== 0) {
       result += `+(${this.add})`;
     }
-    return `${result}=${total}`;
+    return `${result}=${total}(${this.dices}d${this.sides})`;
   }
 }
 
