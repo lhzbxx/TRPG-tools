@@ -13,14 +13,6 @@ class User {
   }
 
   /**
-   * 存在？
-   * @param {String} clientID ClientID
-   */
-  exists(clientID) {
-    return this.users[clientID];
-  }
-
-  /**
    * 离开
    * @param {String} clientID ClientID
    */
